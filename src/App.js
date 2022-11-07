@@ -1,23 +1,48 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [showEvents, setShowEvents] = useState(true); 
+  const [showFeelings, setShowFeelings] = useState(true);
+
+  const [events, setEvents] = useState([
+    {title: "Moony is the best cat", id: 1},
+    {title: "Albert is the best man", id: 2},
+    {title: "Sushi is the best food", id: 3}
+  ])
+
+  const handleClick = (id) => {
+    setEvents((prevEvents) => {
+      return prevEvents.filter((event) => {
+        return id !== event.id; 
+      })
+    })
+    console.log(id);
+  }
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {showEvents && (
+          <div>
+            <button onClick={() => setShowEvents(false)}>Hide Events</button>
+          </div>
+        )}
+        
+        {!showEvents && (
+          <div>
+            <button onClick={() => setShowEvents(true)}>Show Events</button>
+          </div>
+        )}
+
+
+        {showEvents && events.map((events, index) => (
+          <div key={events.id}>
+            <h2>{index} - {events.title}</h2>
+            <button onClick={() => handleClick(events.id)}> Delete Event </button>
+          </div>
+        ))}
     </div>
   );
 }
