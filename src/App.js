@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import Title from './components/Title';
 import Modal from './components/Modal';
+import EventList from './components/EventList';
 
 function App() {
   const [showEvents, setShowEvents] = useState(true); 
@@ -14,12 +15,9 @@ function App() {
   ])
 
   const handleClick = (id) => {
-    setEvents((prevEvents) => {
-      return prevEvents.filter((event) => {
-        return id !== event.id; 
-      })
+    setEvents(prevEvents => {
+      return prevEvents.filter(event => id !== event.id)
     })
-    console.log(id);
   }
 
   const handleModalOpenClose = () => {
@@ -29,6 +27,7 @@ function App() {
       setShowModal(true);
     }
   }
+  
 const subtitle = "All the latest events in Mario Kingdom";
 
   return (
@@ -47,19 +46,8 @@ const subtitle = "All the latest events in Mario Kingdom";
             <button onClick={() => setShowEvents(true)}>Show Events</button>
           </div>
         )}
-
-
-        {showEvents && events.map((events, index) => (
-          <div key={events.id}>
-            <h2>{index} - {events.title}</h2>
-            <button onClick={() => handleClick(events.id)}> Delete Event </button>
-          </div>
-        ))}
-      
-      {/* <Modal> 
-        <h2>10% Off Coupon Code!!</h2>
-        <p>Use the code NINJA10 at the checkout.</p>
-      </Modal> */}
+        
+        {showEvents && <EventList events={events} handleClick={handleClick} />}
 
         {showModal && ( <Modal handleClose={handleModalOpenClose}>
             <div> 
