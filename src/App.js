@@ -5,7 +5,7 @@ import Modal from './components/Modal';
 
 function App() {
   const [showEvents, setShowEvents] = useState(true); 
-  const [showFeelings, setShowFeelings] = useState(true);
+  const [showModal, setShowModal] = useState(true);
 
   const [events, setEvents] = useState([
     {title: "Moony is the best cat", id: 1},
@@ -22,12 +22,20 @@ function App() {
     console.log(id);
   }
 
+  const handleModalOpenClose = () => {
+    setShowModal(false);
+
+    if (!showModal) {
+      setShowModal(true);
+    }
+  }
 const subtitle = "All the latest events in Mario Kingdom";
 
   return (
     <div className="App">
       <Title title= "Events in Your Area" subtitle={subtitle}/>
      
+     <button style = {{ margin: 20, backgroundColor: 'pink' }} onClick={handleModalOpenClose}> Click Me to Open Modal </button>
         {showEvents && (
           <div>
             <button onClick={() => setShowEvents(false)}>Hide Events</button>
@@ -52,10 +60,15 @@ const subtitle = "All the latest events in Mario Kingdom";
         <h2>10% Off Coupon Code!!</h2>
         <p>Use the code NINJA10 at the checkout.</p>
       </Modal> */}
-      <Modal>
-        <h2>Hi</h2>
-        <p>I love Albert!</p>
-      </Modal>
+
+        {showModal && ( <Modal handleClose={handleModalOpenClose}>
+            <div> 
+              <h2>Hi</h2>
+              <p>I love Albert!</p>
+            </div>
+          </Modal>
+        )}
+      
     </div>
   );
 }
